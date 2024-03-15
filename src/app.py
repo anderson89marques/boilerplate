@@ -1,12 +1,17 @@
 from fastapi import FastAPI
 from src.routers.user import router as user_router
+from src.routers.hello_world import router as hello_router
+from src.resource import lifespan
 
 app = FastAPI(
-    title="Boilerplate Fastapi Project"
+    title="Boilerplate Fastapi Project",
+    lifespan=lifespan,
 )
 
-app.include_router(user_router)
+routers = (
+    user_router,
+    hello_router
+)
 
-@app.get('/')
-async def say_hello() -> dict[str, str]:
-    return {'message': 'Hello World'}
+for router in routers:
+    app.include_router(router)
