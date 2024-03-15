@@ -6,8 +6,8 @@ from src.models.user import User
 async def test_when_create_user_in_database_Return_success(session):
     new_user = User(username='alice', password='secret', email='teste@test')
     session.add(new_user)
-    session.commit()
+    await session.commit()
 
-    user = session.scalar(select(User).where(User.username == 'alice'))
+    user = await session.scalar(select(User).where(User.username == 'alice'))
 
     assert user.username == 'alice'

@@ -1,4 +1,4 @@
-async def test_when_list_users_return_success(client):
+async def test_when_list_users_return_success(client, user):
     # arraneg/act
     response = await client.get('/users/')
 

@@ -1,4 +1,4 @@
-async def test_when_update_user_return_success(client):
+async def test_when_update_user_return_success(client, user):
     # arrange/act
     response = await client.put(
         '/users/1',

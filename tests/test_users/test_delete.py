@@ -1,13 +1,5 @@
-async def test_when_delete_user_return_success(client):
-    response_c = await client.post(
-        '/users/',
-        json={
-            'username': 'alice',
-            'email': 'alice@example.com',
-            'password': 'secret',
-        },
-    )
-    response = await client.delete(f'/users/{response_c.json()["id"]}')
+async def test_when_delete_user_return_success(client, user):
+    response = await client.delete(f'/users/{user.id}')
 
     assert response.status_code == 200
     assert response.json() == {'message': 'User deleted'}

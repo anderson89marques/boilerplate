@@ -5,4 +5,4 @@ test:
 	pytest -svv
 
 test-matching:
-	pytest -svv k=$(K)
+	pytest -svv -k=$(K)
