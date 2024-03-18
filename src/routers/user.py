@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from src.models.user import User
-from src.resources import get_session
+from src.resources import get_db_session
 from src.schemas.user import UserList, UserPublic, UserSchema
 
 router = APIRouter()
@@ -14,7 +14,7 @@ router = APIRouter()
     '/users/', status_code=status.HTTP_201_CREATED, response_model=UserPublic
 )
 async def create_user(
-    user: UserSchema, session: AsyncSession = Depends(get_session)
+    user: UserSchema, session: AsyncSession = Depends(get_db_session)
 ):
     logger.info('Creating a User.')
 
@@ -40,7 +40,7 @@ async def create_user(
 async def list_users(
     skip: int = 0,
     limit: int = 100,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_db_session),
 ):
     raw = await session.execute(select(User).offset(skip).limit(limit))
     users = raw.scalars().all()
@@ -51,7 +51,7 @@ async def list_users(
 async def update_user(
     user_id: int,
     user: UserSchema,
-    session: AsyncSession = Depends(get_session),
+    session: AsyncSession = Depends(get_db_session),
 ):
     user_db = await session.scalar(select(User).where(User.id == user_id))
     if not user_db:
@@ -69,13 +69,13 @@ async def update_user(
 
 @router.delete('/users/{user_id}')
 async def delete_user(
-    user_id: int, session: AsyncSession = Depends(get_session)
+    user_id: int, session: AsyncSession = Depends(get_db_session)
 ):
-    user_db = session.scalar(select(User).where(User.id == user_id))
+    user_db = await session.scalar(select(User).where(User.id == user_id))
     if not user_db:
         raise HTTPException(status_code=404, detail='User not found')
 
-    session.delete(user_db)
+    await session.delete(user_db)
     await session.commit()
 
     return {'message': 'User deleted'}
