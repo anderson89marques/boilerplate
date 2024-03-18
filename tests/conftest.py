@@ -12,7 +12,7 @@ from sqlalchemy.orm import configure_mappers, sessionmaker
 
 from src.app import app
 from src.models.user import Base, User
-from src.resources import get_session
+from src.resources import get_db_session
 
 
 @pytest.fixture
@@ -38,7 +38,7 @@ async def client(session) -> AsyncIterable[AsyncClient]:
         yield session
 
     async with AsyncClient(app=app, base_url='http://test') as client:
-        app.dependency_overrides[get_session] = get_session_override
+        app.dependency_overrides[get_db_session] = get_session_override
         yield client
 
     app.dependency_overrides.clear()
