@@ -3,14 +3,15 @@
 Esse repositório define uma estrutura básica de um projeto ```Fastapi```.   
 Nele está definido o  ```Postgres``` como banco de dados,  
 usa o ```Poetry``` como gerenciador de pacotes,
-usa o ```SqlAlchemy``` como ORM.    
-Nele também vem um sistema CRUD,
+usa o ```SqlAlchemy``` como ORM e ```Alembic``` para as migrações.    
+Nele também vem um sistema CRUD, 
 com rotas, integração com banco e ```testes```.
 O projeto usa ```Docker``` e ```Docker Compose``` para execução do mesmo.
 
 ## Outros pacotes importantes utilizados
 
 * uvicorn
+* alembic
 * pytest
 * blue
 * ruff

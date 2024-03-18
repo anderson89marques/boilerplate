@@ -17,6 +17,7 @@ services:
     image: boilerplate
     container_name: boilerplate
     build: .
+    entrypoint: ./entrypoint.sh
     env_file:
       - .env
     ports:

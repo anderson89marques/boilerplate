@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 
 run:
-	hypercorn src.app:app
+	poetry run uvicorn --host 0.0.0.0 src.app:app
 
 test:
 	pytest -svv
@@ -13,4 +13,10 @@ lint:
 	ruff check . && blue --check . --diff && isort --check . --diff 
 
 format:
-	blue .  && isort . 
+	blue .  && isort .	
+
+migration:
+	@alembic revision --autogenerate -m $(name)
+
+migrate:
+	@alembic upgrade head
