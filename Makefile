@@ -1,3 +1,5 @@
+SHELL=/bin/bash
+
 run:
 	hypercorn src.app:app
 

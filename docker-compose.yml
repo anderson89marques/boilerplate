@@ -15,6 +15,7 @@ services:
 
   boilerplate:
     image: boilerplate
+    container_name: boilerplate
     build: .
     env_file:
       - .env
